@@ -2,7 +2,7 @@
 (function(exports){
 
   function Row(config, myindex) {
-      console.log(config);
+      //console.log(config);
     $('.app-container').append('<div class='+config.type+myindex+' index="'+myindex+'"></div');
 
     $.each(config.data, function(index, value){

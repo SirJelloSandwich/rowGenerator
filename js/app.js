@@ -3,28 +3,51 @@
 
 function App(settings) {
 
+  this.allGridRows =[];
+  this.gridRow = [];
+
+  $(this).on( "allDataLoaded", function() {
+    this.dataLoaded();
+
+    });
+
   this.makeInitialDataCall = function() {
 
-       this.model.loadData('http://www.ucg.org/api/v1.0/featured_media',"featuredUrl",  this.featuredCallbackHandler);
-      // this.row1 = 'http://www.ucg.org/api/v1.0/media?filter[production]=208';
-      // this.data.loadData(this.row1, "beyondTodayDaily",  this.genericCallbackHandler);
-      // this.row2 = 'http://www.ucg.org/api/v1.0/media?filter[production]=209';
-      // this.data.loadData(this.row2, "beyondTodayTV",  this.genericCallbackHandler);
-      // this.row3 = 'http://www.ucg.org/api/v1.0/series?filter[production]=275';
-      // this.data.loadData(this.row3, "seriesData",  this.dataLoaded);
+      this.model.loadData('http://www.ucg.org/api/v1.0/featured_media',"featuredUrl",  this.featuredCallbackHandler);
+      this.row3 = 'http://www.ucg.org/api/v1.0/series?filter[production]=275';
+      this.model.loadData(this.row3, "seriesData", this.gridRowCallbackHandler);
+      this.row2 = 'http://www.ucg.org/api/v1.0/media?filter[production]=209';
+      this.model.loadData(this.row2, "beyondTodayTV",  this.gridRowCallbackHandler);
+      this.row1 = 'http://www.ucg.org/api/v1.0/media?filter[production]=208';
+      this.model.loadData(this.row1, "beyondTodayDaily",  this.gridRowCallbackHandler);
+      $( this).trigger( "allDataLoaded" );
   };
 
     this.featuredCallbackHandler  = function(urlString){
-          this.model.loadData(urlString, "featuredRowData",  this.dataLoaded);
+          this.model.loadData(urlString, "featuredRowData", this.genericCallbackHandler);
+
     }.bind(this);
 
     this.genericCallbackHandler = function(data){
 
     }.bind(this);
 
-    this.dataLoaded = function(data) {
+    this.gridRowCallbackHandler = function(data){
+      this.allGridRows.push(data);
+    //console.log(  app.allGridRows);
+    }.bind(this);
 
-      this.initFeaturedRow(data);
+    this.dataLoaded = function() {
+        this.initFeaturedRow(this.model.featuredRowData);
+
+          // for(var index in this.allGridRows) {
+          //   console.log(index);
+          //
+          // }
+        this.allGridRows.forEach( function(element, index, array){
+          //console.log(this);
+           this.initGridRow(element, index);
+        }.bind(this));
     // this.$appContainer.empty();
     //
     // var html = fireUtils.buildTemplate($("#app-header-template"), {});
@@ -56,13 +79,28 @@ function App(settings) {
        marginBottom: 20,
        marginLeft:0,
        data:clientData.data
-      //  data: {
-      //    img: clientData.data.image.styles.large
-      //  }
+
     };
     var featuredRow = this.featuredRow =  new Row(ourData, 0);
 
-  };
+  }.bind(this);
+
+  this.initGridRow = function (clientData, index) {
+    var ourData = {
+      type:'gridRow',
+       width : 400,
+       height:200,
+       marginTop:20,
+       marginRight:20,
+       marginBottom: 20,
+       marginLeft:0,
+       data:clientData.data
+
+    };
+    var gridRow = [];
+    gridRow[index] = this.gridRow[index] =  new Row(ourData, index);
+
+  }.bind(this);
 
   this.model = new Model();
   this.makeInitialDataCall();

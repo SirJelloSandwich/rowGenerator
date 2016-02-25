@@ -17,7 +17,7 @@
         //     type =true;
         // }
       }else{
-          type =true;
+          type =false;
       }
       console.log(url+type+dataType);
 
