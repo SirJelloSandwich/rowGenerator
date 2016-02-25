@@ -102,6 +102,36 @@ function App(settings) {
 
   }.bind(this);
 
+  this.keyDown = function(e){
+      console.log('two');
+      if(e.keyIdentifier === "Right"){
+        console.log('three');
+        $(this.row).css({
+          'transform':'translate3d(-600px, 0px, 0px)',
+         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+        });
+         e.preventDefault();
+      }
+      if(e.keyIdentifier === "Left"){
+         $(this.row).css({
+           'transform':'translate3d(0px, 0px, 0px)',
+           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+         });
+          e.preventDefault();
+       }
+     }.bind(this);
+
+  this.handleKey = function(e){
+    console.log('one');
+    this.view.keyDown(e);
+
+  }.bind(this);
+
+  this.view = this;
+  this.row = '.featuredRow0';
+
+  window.addEventListener("keydown",this.handleKey, false);
+
   this.model = new Model();
   this.makeInitialDataCall();
 
@@ -141,10 +171,7 @@ function App(settings) {
 //   data: data
 // };
 //
-// this.handleKey = function(e){
-//   this.view.keyDown(e);
 //
-// }.bind(this);
 //
 // window.featuredRow = new Row(featuredRowConfig, 0);
 // window.gridRow =[];
@@ -155,6 +182,3 @@ function App(settings) {
 //
 //  });
 //
-// this.view = gridRow[0];
-//
-// window.addEventListener("keydown",this.handleKey, false);
