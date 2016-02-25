@@ -73,7 +73,7 @@ function App(settings) {
     var ourData = {
       type:'featuredRow',
        width : 800,
-       height:400,
+       height:500,
        marginTop:20,
        marginRight:20,
        marginBottom: 20,
@@ -90,7 +90,7 @@ function App(settings) {
       type:'gridRow',
        width : 400,
        height:200,
-       marginTop:20,
+       marginTop:40,
        marginRight:20,
        marginBottom: 20,
        marginLeft:0,
