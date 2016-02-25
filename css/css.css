@@ -1,0 +1,25 @@
+
+body{
+  width: 1920px;
+  height:1080px;
+}
+.carousel {
+    width: 0px;
+    /*position: absolute;*/
+    overflow: hidden;
+}
+
+.carousel > img {
+  /*position: relative;  */
+
+}
+.gridRow {
+    width: 0px;
+    /*position: absolute;*/
+    overflow: hidden;
+}
+
+.gridRow > img {
+  /*position: relative;  */
+
+}
