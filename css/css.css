@@ -4,14 +4,27 @@ body{
   height:1080px;
   overflow: hidden;
   background: url('../assets/bg_fhd.jpg');
+  margin: 0px;
 }
+.overhang{
+  content: url('../assets/overhang_fhd.jpg');
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
 .app-container{
     overflow: hidden;
+    position: relative;
+    z-index: 0;
 }
-.app-container > div:first-child {
-    width: 0px;
+.app-container > div:not(:first-child) {
+    width: 1660px;
     overflow: hidden;
+    transform: translate3d(100px,0px,0px);
+    margin-bottom: 200px;
 }
+
 
 .app-container > div:first-child > img {
 
@@ -19,7 +32,6 @@ body{
 }
 .gridRow {
     width: 0px;
-
     overflow: hidden;
 }
 

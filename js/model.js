@@ -19,7 +19,7 @@
       }else{
           type =false;
       }
-      console.log(url+type+dataType);
+      //console.log(url+type+dataType);
 
       requestData = {
           url: url,

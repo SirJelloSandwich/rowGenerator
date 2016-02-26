@@ -14,12 +14,13 @@ function App(settings) {
   this.makeInitialDataCall = function() {
 
       this.model.loadData('http://www.ucg.org/api/v1.0/featured_media',"featuredUrl",  this.featuredCallbackHandler);
-      this.row3 = 'http://www.ucg.org/api/v1.0/series?filter[production]=275';
-      this.model.loadData(this.row3, "seriesData", this.gridRowCallbackHandler);
-      this.row2 = 'http://www.ucg.org/api/v1.0/media?filter[production]=209';
-      this.model.loadData(this.row2, "beyondTodayTV",  this.gridRowCallbackHandler);
       this.row1 = 'http://www.ucg.org/api/v1.0/media?filter[production]=208';
       this.model.loadData(this.row1, "beyondTodayDaily",  this.gridRowCallbackHandler);
+      this.row2 = 'http://www.ucg.org/api/v1.0/media?filter[production]=209';
+      this.model.loadData(this.row2, "beyondTodayTV",  this.gridRowCallbackHandler);
+      this.row3 = 'http://www.ucg.org/api/v1.0/series?filter[production]=275';
+      this.model.loadData(this.row3, "seriesData", this.gridRowCallbackHandler);
+
       $( this).trigger( "allDataLoaded" );
   };
 
@@ -78,6 +79,7 @@ function App(settings) {
        marginRight:20,
        marginBottom: 20,
        marginLeft:0,
+        position: -300,
        data:clientData.data
 
     };
@@ -94,35 +96,149 @@ function App(settings) {
        marginRight:20,
        marginBottom: 20,
        marginLeft:0,
+       position: 0,
        data:clientData.data
 
     };
-    var gridRow = [];
-    gridRow[index] = this.gridRow[index] =  new Row(ourData, index);
+
+    this.gridRow[index] =  new Row(ourData, index);
 
   }.bind(this);
 
   this.keyDown = function(e){
-      console.log('two');
-      if(e.keyIdentifier === "Right"){
-        console.log('three');
-        $(this.row).css({
-          'transform':'translate3d(-600px, 0px, 0px)',
-         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-        });
-         e.preventDefault();
+      console.log(e);
+
+      switch(e.keyIdentifier){
+        case "Enter":
+          switch(this.row){
+            case '.featuredRow0':
+                $(this.row).css({
+                   'transform':'translate3d(-600px, 0px, 0px)',
+                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                 });
+                e.preventDefault();
+              break;
+              case '.gridRow0':
+                  $(this.row).css({
+                     'transform':'translate3d(-420px, 0px, 0px)',
+                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                   });
+                  e.preventDefault();
+                break;
+          }
+
+        break;
+        case "Right":
+          switch(this.row){
+            case '.featuredRow0':
+                $(this.row).css({
+                   'transform':'translate3d(-600px, 0px, 0px)',
+                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                 });
+                e.preventDefault();
+              break;
+              case '.gridRow0':
+                  $(this.row).css({
+                     'transform':'translate3d(-420px, 0px, 0px)',
+                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                   });
+                  e.preventDefault();
+                break;
+          }
+
+        break;
+        case "Left":
+          switch(this.row){
+            case '.featuredRow0':
+              $(this.row).css({
+                  'transform':'translate3d(0px, 0px, 0px)',
+                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                });
+                 e.preventDefault();
+            break;
+          }
+
+        break;
+        case "Down":
+          switch(this.row){
+            case '.featuredRow0':
+              this.row = '.gridRow0';
+              this.Y = -520;
+              $(".app-container").css({
+                'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+              });
+            break;
+            case '.gridRow0':
+              this.row = '.gridRow1';
+                this.Y +=-500;
+                $(".app-container").css({
+                  'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                });
+              break;
+              case '.gridRow1':
+                this.row = '.gridRow2';
+                  this.Y +=-460;
+                  $(".app-container").css({
+                    'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                  });
+                break;
+          }
+
+
+        break;
+        case "Up":
+        switch(this.row){
+          case '.gridRow2':
+            this.row = '.gridRow1';
+              this.Y +=460;
+              $(".app-container").css({
+                'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+              });
+            break;
+            case '.gridRow1':
+              this.row = '.gridRow0';
+                this.Y +=500;
+                $(".app-container").css({
+                  'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                });
+              break;
+              case '.gridRow0':
+                this.row = '.featuredRow0';
+                  this.Y +=520;
+                  $(".app-container").css({
+                    'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+                  });
+                break;
+        }
+
+        break;
+
       }
-      if(e.keyIdentifier === "Left"){
-         $(this.row).css({
-           'transform':'translate3d(0px, 0px, 0px)',
-           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-         });
-          e.preventDefault();
-       }
+      // if(e.keyIdentifier === "Right"){
+      //   //console.log('three');
+      //   $(this.row).css({
+      //     'transform':'translate3d(-600px, 0px, 0px)',
+      //    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+      //   });
+      //    e.preventDefault();
+      // }
+      // if(e.keyIdentifier === "Left"){
+      //    $(this.row).css({
+      //      'transform':'translate3d(0px, 0px, 0px)',
+      //      'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+      //    });
+      //     e.preventDefault();
+      //  }
      }.bind(this);
 
   this.handleKey = function(e){
-    console.log('one');
+    //console.log('one');
     this.view.keyDown(e);
 
   }.bind(this);
@@ -140,45 +256,3 @@ function App(settings) {
 
   exports.App = App;
 }(window));
-
-// var data = {
-//   img:[ "http://www.ucg.org/files/styles/large/public/image/media-production/christian-view-on-politics-part-2.jpg?itok=gXV5WBfF",
-//         "http://www.ucg.org/files/styles/large/public/image/media-production/christian-view-on-politics-part-2.jpg?itok=gXV5WBfF",
-//         "http://www.ucg.org/files/styles/large/public/image/media-production/christian-view-on-politics-part-2.jpg?itok=gXV5WBfF"
-//       ],
-//   items:3
-// };
-//
-// var featuredRowConfig = {
-//   type:'carousel',
-//   width : 800,
-//   height:400,
-//   marginTop:20,
-//   marginRight:20,
-//   marginBottom: 20,
-//   marginLeft:0,
-//   data: data
-// };
-//
-// var gridRowConfig = {
-//   type:'gridRow',
-//   width : 400,
-//   height:200,
-//   marginTop:20,
-//   marginRight:20,
-//   marginBottom: 20,
-//   marginLeft:0,
-//   data: data
-// };
-//
-//
-//
-// window.featuredRow = new Row(featuredRowConfig, 0);
-// window.gridRow =[];
-//
-//
-//  data.img.forEach(function(element, index, array){
-//   window.gridRow[index] = new Row(gridRowConfig,index);
-//
-//  });
-//
