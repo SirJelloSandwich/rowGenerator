@@ -5,16 +5,16 @@
     //this.allClasses = [];
       //console.log(config);
       if(config.rowArrows){
-        $('.app-container').append('<div><span class="rowtitle">Title</span><span class="rowArrowLeft"></span><span class="rowArrowRight"></span></span></div><div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+        $('.landingPage').append('<div><span class="rowtitle">Title</span><span class="rowArrowLeft"></span><span class="rowArrowRight"></span></span></div><div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
       else{
-          $('.app-container').append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+          $('.landingPage').append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
 
     //this.allClasses.push(config.type+myindex);
       if(config.rowArrows){
         $.each(config.data, function(index, value){
-            $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="duration">'+config.data[index].duration+'</div><div class="description">'+config.data[index].description+'</div></div>');
+            $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="label">'+config.data[index].label+'</div><div class="duration">'+config.data[index].duration+'</div><div class="description">'+config.data[index].description+'</div></div>');
         });
   }
   else{

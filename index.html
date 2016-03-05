@@ -2,15 +2,74 @@
     <head>
 
         <link rel="stylesheet" type="text/css" href=css/css.css>
+        <link rel="stylesheet" type="text/css" href=css/springboard.css>
 
     </head>
     <body>
       <div class="overhang"></div>
       <div class="app-container">
+        <div class="landingPage">
 
+        </div>
       </div>
 
+      <!-- Springboard Template -->
+      <script id="springboard-template" type="text/x-handlebars-template">
+
+        <div class="springboardContainer">
+
+            <div id="springboardPage">
+              <div class="mainSpringboardPic">
+                {{#if image}}
+                  <img class="thumbPic" src={{image.styles.medium}}>
+                {{else}}
+                  <img class="thumbPic" src=assets/BT_placeholder.png>
+                {{/if}}
+              </div>
+              <div class="springboardData">
+                <span class="springboardMainTitle">{{label}}</span>
+                <div class="ratingEtc">
+
+                  <span class="movieYear">
+                    {{fliYear}} |
+                  </span>
+
+                  {{#each authors}}
+
+                  <span class="director">
+
+                      {{label}} |
+
+                  </span>
+                  {{/each}}
+
+
+                  <span class="movieLength">
+                     {{fliTime}}
+                  </span>
+
+                </div>
+                {{#if springboardButtons}}
+                <div class="springboardRow">
+
+                  <span class="springboardButton1">
+                    <img class="springboardButtonIcon" src="assets/icon_40_play_fhd.png">
+                    <p class="springboardButtonText">Play</p>
+                  </span>
+
+                </div>
+                {{/if}}
+              </div>
+              <hr>
+            </div>
+
+        </div>
+     </script>
+
+
+      <script src="libs/handlebars-v4.0.5.js"></script>
       <script src="libs/jquery-2.2.1.min.js"></script>
+      <script src="js/util.js"></script>
       <script src="js/model.js"></script>
       <script src="js/row.js"></script>
       <script src="js/app.js"></script>

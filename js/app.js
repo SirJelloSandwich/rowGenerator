@@ -7,6 +7,7 @@ function App(settings) {
 
   this.allGridRows =[];
   this.gridRow = [];
+  this.featuredRow = [];
   this.Y = 0;
   this.allClasses = [];
   this.upDownIndex = 0;
@@ -40,7 +41,7 @@ function App(settings) {
     }.bind(this);
 
     this.genericCallbackHandler = function(data){
-
+      this.allGridRows.push(data);
     }.bind(this);
 
     this.gridRowCallbackHandler = function(data){
@@ -49,7 +50,7 @@ function App(settings) {
     }.bind(this);
 
     this.dataLoaded = function() {
-        this.initFeaturedRow(this.model.featuredRowData);
+
 
           // for(var index in this.allGridRows) {
           //   console.log(index);
@@ -57,7 +58,12 @@ function App(settings) {
           // }
         this.allGridRows.forEach( function(element, index, array){
           //console.log(this);
-           this.initGridRow(element, index);
+          if(index === 0){
+              this.initFeaturedRow(element, index);
+              return;
+          }
+
+          this.initGridRow(element, index);
         }.bind(this));
     // this.$appContainer.empty();
     //
@@ -85,19 +91,30 @@ function App(settings) {
     // console.log(this.gridRowItemWidth);
   }.bind(this);
 
-  this.initFeaturedRow = function (clientData) {
-    this.settings.featuredRowData.data = clientData.data;
-
-    var featuredRow = this.featuredRow =  new Row(this.settings.featuredRowData, 0);
-    this.allClasses.push(this.settings.featuredRowData.type+0);
+  this.initFeaturedRow = function (element, index) {
+    this.settings.featuredRowData.data = element.data;
+    this.featuredRow[index] = this.featuredRow =  new Row(this.settings.featuredRowData, index);
+    this.allClasses.push(this.settings.featuredRowData.type+index);
   }.bind(this);
 
   this.initGridRow = function (element,index) {
     this.settings.gridRowData.data = element.data;
-
     this.gridRow[index] =  new Row(this.settings.gridRowData, index);
     this.allClasses.push(this.settings.gridRowData.type+index);
   }.bind(this);
+
+  String.prototype.toHHMMSS = function () {
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    var time    = minutes+':'+seconds;
+    return time;
+};
 
   this.keyDown = function(e){
       //console.log(e);
@@ -106,9 +123,34 @@ function App(settings) {
 
       switch(e.keyIdentifier){
         case "Enter":
-          console.log(this.index[this.upDownIndex]);
-          console.log($('.'+this.allClasses[this.upDownIndex]+" "+"img").eq(this.index[this.upDownIndex]).attr('id'));
-        
+          //console.log(this.index[this.upDownIndex]);
+          var id = $('.'+this.allClasses[this.upDownIndex]+" "+"img").eq(this.index[this.upDownIndex]).attr('id');
+          //console.log(id);
+
+          var fff = (function(){
+            for(var ttt in this.allGridRows){
+              for(var ppp in this.allGridRows[ttt].data){
+                if(parseInt(this.allGridRows[ttt].data[ppp].id, 10 ) === parseInt(id, 10)){//? this.allGridRows[ttt].data[ppp]: false ;
+                   return this.allGridRows[ttt].data[ppp];
+                }
+              }
+            }
+          }.bind(this))();
+
+          fff.fliYear = new Date().getFullYear(fff.created);
+          fff.fliTime = fff.duration.toHHMMSS();
+          // fff.fliAuthors = fff.authors.forEach(function(element, index, array){
+          //   console.log(element);
+          //     //return element.label;
+          // });
+          //console.log(  fff.fliAuthors );
+          fff.springboardButtons = 1;
+          var html = this.util.buildTemplate($('#springboard-template'), fff);
+          $('.app-container').append(html);
+          $(".landingPage").hide();
+
+          //console.log(fff);
+
 
         break;
         case "Right":
@@ -228,7 +270,7 @@ function App(settings) {
   this.row = 'featuredRow0';
 
   window.addEventListener("keydown",this.handleKey, false);
-
+  this.util = new Util();
   this.model = new Model();
   this.makeInitialDataCall();
 
