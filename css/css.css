@@ -12,17 +12,95 @@ body{
   position: relative;
   z-index: 1;
 }
+.rowTitle{
+  font-size: 36px;
+  position: relative;
+  left: 100px;
+  bottom: 10px;
+}
+.duration{
+  /*background: red;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    top: 150px;
+    left: 300px;
+    z-index: 1000;*/
+}
+.description{
+
+}
+.overlay{
+  background: #000000;
+  height: 75px;
+  position: relative;
+  top: -95px;
+  width: 800px;
+  opacity: 0.7;
+}
+.overlayText{
+  color: white;
+  position: relative;
+
+  font: 34px bold;
+  top: -150px;
+  left: 20px;
+}
+.gridRow0 > div, .gridRow1 > div , .gridRow2 > div  {
+  position: relative;
+height: 300px;
+width: 420px;
+float: left;
+}
+.featuredRow0 > div{
+  position: relative;
+      height: 500px;
+      width: 820px;
+      float: left;
+}
+
+
+.rowArrowLeft{
+  position: relative;
+  top: 120px;
+  width: 40px;
+  left: -30px;
+  height: 40px;
+  content: url('../assets/icon_40_arrowleft_fhd.png');
+}
+
+.rowArrowRight{
+  position: relative;
+top: 120px;
+width: 40px;
+height: 40px;
+content: url('../assets/icon_40_arrowright_fhd.png');
+left: 1680px;
+}
+
 
 .app-container{
     overflow: hidden;
     position: relative;
     z-index: 0;
 }
-.app-container > div:not(:first-child) {
+/*.app-container > div:not(:first-child) {*/
+.app-container > div:nth-child(odd):not(:first-child){
+
     width: 1660px;
     overflow: hidden;
     transform: translate3d(100px,0px,0px);
-    /*margin-bottom: 200px;*/
+
+}
+/*.gridRow0, .gridRow1, .gridRow2{
+  width: 1660px;
+  overflow: hidden;
+  transform: translate3d(100px,0px,0px);
+}*/
+.app-container > div:nth-child(even){
+  /*width: 1660px;
+  overflow: hidden;
+  transform: translate3d(100px,0px,0px);*/
 }
 
 

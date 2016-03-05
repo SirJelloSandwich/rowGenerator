@@ -3,6 +3,8 @@
 
 function App(settings) {
 
+  this.settings = settings;
+
   this.allGridRows =[];
   this.gridRow = [];
   this.Y = 0;
@@ -10,6 +12,7 @@ function App(settings) {
   this.upDownIndex = 0;
   this.posFromLeft = [-300,100,100,100];
   var thisPos = -300;
+  var thisOtherPos = [0,0,0];
   var ttt = 0;
   this.index = [1,0,0,0];
 
@@ -83,38 +86,17 @@ function App(settings) {
   }.bind(this);
 
   this.initFeaturedRow = function (clientData) {
-    var ourData = {
-      type:'featuredRow',
-       width : 800,
-       height:500,
-       marginTop:0,
-       marginRight:20,
-       marginBottom: 20,
-       marginLeft:0,
-        position: -300,
-       data:clientData.data
+    this.settings.featuredRowData.data = clientData.data;
 
-    };
-    var featuredRow = this.featuredRow =  new Row(ourData, 0);
-    this.allClasses.push(ourData.type+0);
+    var featuredRow = this.featuredRow =  new Row(this.settings.featuredRowData, 0);
+    this.allClasses.push(this.settings.featuredRowData.type+0);
   }.bind(this);
 
-  this.initGridRow = function (clientData, index) {
-    var ourData = {
-      type:'gridRow',
-       width : 400,
-       height:200,
-       marginTop:0,
-       marginRight:20,
-       marginBottom: 20,
-       marginLeft:0,
-       position: 0,
-       data:clientData.data
+  this.initGridRow = function (element,index) {
+    this.settings.gridRowData.data = element.data;
 
-    };
-
-    this.gridRow[index] =  new Row(ourData, index);
-    this.allClasses.push(ourData.type+index);
+    this.gridRow[index] =  new Row(this.settings.gridRowData, index);
+    this.allClasses.push(this.settings.gridRowData.type+index);
   }.bind(this);
 
   this.keyDown = function(e){
@@ -124,57 +106,87 @@ function App(settings) {
 
       switch(e.keyIdentifier){
         case "Enter":
-          switch(this.row){
-            case '.featuredRow0':
-                $(this.row).css({
-                   'transform':'translate3d(-600px, 0px, 0px)',
-                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                 });
-                e.preventDefault();
-              break;
-              case '.gridRow0':
-                  $(this.row).css({
-                     'transform':'translate3d(-420px, 0px, 0px)',
-                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                   });
-                  e.preventDefault();
-                break;
-          }
+          console.log(this.index[this.upDownIndex]);
+          console.log($('.'+this.allClasses[this.upDownIndex]+" "+"img").eq(this.index[this.upDownIndex]).attr('id'));
+        
 
         break;
         case "Right":
+          console.log(this.row);
+          console.log(this.upDownIndex);
+          switch(this.row){
 
-               thisPos += -820;
+              case "featuredRow0":
+                  if(this.index[this.upDownIndex] < $('.'+this.row).children().length-1){
+                    thisPos += -820;
 
-                $('.'+this.allClasses[this.upDownIndex]).css({
-                  'transform': "translate3d("+thisPos+"px, 0px,0px)"
-                });
+                     $('.'+this.allClasses[this.upDownIndex]).css({
+                       'transform': "translate3d("+thisPos+"px, 0px,0px)"
+                     });
 
-             this.index[this.upDownIndex]+=1;
+                     this.index[this.upDownIndex]+=1;
+                   }
+                break;
+                default:
+                  if(this.index[this.upDownIndex] < $('.'+this.row).children().length-1){
+                    thisOtherPos[this.upDownIndex-1] += -420;
+
+                    $('.'+this.allClasses[this.upDownIndex]).css({
+                      'transform': "translate3d("+thisOtherPos[this.upDownIndex-1]+"px, 0px,0px)"
+                    });
+
+                    this.index[this.upDownIndex]+=1;
+
+                  }
+
+                break;
+
+            }
+
 
 
 
         break;
 
         case "Left":
+          switch(this.row){
 
-        if(this.index[this.upDownIndex] === 1){
+            case "featuredRow0":
+              if(this.index[this.upDownIndex] > 0){
+                  if(this.index[this.upDownIndex] === 1){
 
-              thisPos = 520;
+                        thisPos = 520;
 
-           $('.'+this.allClasses[this.upDownIndex]).css({
-             'transform': "translate3d("+thisPos+"px, 0px,0px)"
-           });
-        }
-        else{
+                     $('.'+this.allClasses[this.upDownIndex]).css({
+                       'transform': "translate3d("+thisPos+"px, 0px,0px)"
+                     });
+                  }
+                  else{
 
-          thisPos += 820;
+                    thisPos += 820;
 
-           $('.'+this.allClasses[this.upDownIndex]).css({
-             'transform': "translate3d("+thisPos+"px, 0px,0px)"
-           });
-        }
-          this.index[this.upDownIndex]-=1;
+                     $('.'+this.allClasses[this.upDownIndex]).css({
+                       'transform': "translate3d("+thisPos+"px, 0px,0px)"
+                     });
+                  }
+                    this.index[this.upDownIndex]-=1;
+                }
+              break;
+              default:
+                if(this.index[this.upDownIndex] > 0){
+                  thisOtherPos[this.upDownIndex-1] += 420;
+
+                  $('.'+this.allClasses[this.upDownIndex]).css({
+                    'transform': "translate3d("+thisOtherPos[this.upDownIndex-1]+"px, 0px,0px)"
+                  });
+
+                  this.index[this.upDownIndex]-=1;
+                }
+              break;
+            }
+
+
+
 
 
         break;
@@ -188,35 +200,7 @@ function App(settings) {
           console.log(this.posFromLeft[this.upDownIndex]);
          }
          break;
-          // switch(this.allClasses[this.upDownIndex]){
-          //   case '.featuredRow0':
-          //     this.row = '.gridRow0';
-          //     this.Y += -520;
-          //     $(".app-container").css({
-          //       'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-          //       'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-          //     });
-          //   break;
-          //   case '.gridRow0':
-          //     this.row = '.gridRow1';
-          //       this.Y += -220;
-          //       $(".app-container").css({
-          //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-          //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-          //       });
-          //     break;
-          //     case '.gridRow1':
-          //       this.row = '.gridRow2';
-          //         this.Y += -220;
-          //         $(".app-container").css({
-          //           'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-          //           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-          //         });
-          //       break;
-          // }
 
-
-        //break;
         case "Up":
 
         if(this.upDownIndex > 0){
@@ -228,53 +212,10 @@ function App(settings) {
           console.log(this.posFromLeft[this.upDownIndex]);
         }
         break;
-        // switch(this.row){
-        //   case '.gridRow0':
-        //     this.row = '.featuredRow0';
-        //       this.Y +=520;
-        //       $(".app-container").css({
-        //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-        //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-        //       });
-        //     break;
-        //     case '.gridRow1':
-        //       this.row = '.gridRow0';
-        //         this.Y +=220;
-        //         $(".app-container").css({
-        //           'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-        //           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-        //         });
-        //       break;
-        //   case '.gridRow2':
-        //     this.row = '.gridRow1';
-        //       this.Y +=220;
-        //       $(".app-container").css({
-        //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-        //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-        //       });
-        //     break;
-        //
-        //
-        // }
 
-      //  break;
 
       }
-      // if(e.keyIdentifier === "Right"){
-      //   //console.log('three');
-      //   $(this.row).css({
-      //     'transform':'translate3d(-600px, 0px, 0px)',
-      //    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-      //   });
-      //    e.preventDefault();
-      // }
-      // if(e.keyIdentifier === "Left"){
-      //    $(this.row).css({
-      //      'transform':'translate3d(0px, 0px, 0px)',
-      //      'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-      //    });
-      //     e.preventDefault();
-      //  }
+
      }.bind(this);
 
   this.handleKey = function(e){
@@ -284,7 +225,7 @@ function App(settings) {
   }.bind(this);
 
   this.view = this;
-  this.row = '.featuredRow0';
+  this.row = 'featuredRow0';
 
   window.addEventListener("keydown",this.handleKey, false);
 
