@@ -5,6 +5,13 @@ function App(settings) {
 
   this.allGridRows =[];
   this.gridRow = [];
+  this.Y = 0;
+  this.allClasses = [];
+  this.upDownIndex = 0;
+  this.posFromLeft = [-300,100,100,100];
+  var thisPos = -300;
+  var ttt = 0;
+  this.index = [1,0,0,0];
 
   $(this).on( "allDataLoaded", function() {
     this.dataLoaded();
@@ -67,7 +74,12 @@ function App(settings) {
     // this.gaUrl += "&z=" + Date.now();
     // this.data.postData(this.gaUrl);
 
-
+    this.featuredRowItemWidth = $('.'+this.allClasses[this.upDownIndex]+" "+'img').width();
+    this.upDownIndex = 1;
+    this.gridRowItemWidth = $('.'+this.allClasses[this.upDownIndex]+" "+'img').width();
+    this.upDownIndex = 0;
+    // console.log(this.featuredRowItemWidth);
+    // console.log(this.gridRowItemWidth);
   }.bind(this);
 
   this.initFeaturedRow = function (clientData) {
@@ -75,7 +87,7 @@ function App(settings) {
       type:'featuredRow',
        width : 800,
        height:500,
-       marginTop:20,
+       marginTop:0,
        marginRight:20,
        marginBottom: 20,
        marginLeft:0,
@@ -84,7 +96,7 @@ function App(settings) {
 
     };
     var featuredRow = this.featuredRow =  new Row(ourData, 0);
-
+    this.allClasses.push(ourData.type+0);
   }.bind(this);
 
   this.initGridRow = function (clientData, index) {
@@ -92,7 +104,7 @@ function App(settings) {
       type:'gridRow',
        width : 400,
        height:200,
-       marginTop:40,
+       marginTop:0,
        marginRight:20,
        marginBottom: 20,
        marginLeft:0,
@@ -102,11 +114,13 @@ function App(settings) {
     };
 
     this.gridRow[index] =  new Row(ourData, index);
-
+    this.allClasses.push(ourData.type+index);
   }.bind(this);
 
   this.keyDown = function(e){
-      console.log(e);
+      //console.log(e);
+      var posFromLeft;
+
 
       switch(e.keyIdentifier){
         case "Enter":
@@ -129,95 +143,121 @@ function App(settings) {
 
         break;
         case "Right":
-          switch(this.row){
-            case '.featuredRow0':
-                $(this.row).css({
-                   'transform':'translate3d(-600px, 0px, 0px)',
-                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                 });
-                e.preventDefault();
-              break;
-              case '.gridRow0':
-                  $(this.row).css({
-                     'transform':'translate3d(-420px, 0px, 0px)',
-                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                   });
-                  e.preventDefault();
-                break;
-          }
+
+               thisPos += -820;
+
+                $('.'+this.allClasses[this.upDownIndex]).css({
+                  'transform': "translate3d("+thisPos+"px, 0px,0px)"
+                });
+
+             this.index[this.upDownIndex]+=1;
+
+
 
         break;
+
         case "Left":
-          switch(this.row){
-            case '.featuredRow0':
-              $(this.row).css({
-                  'transform':'translate3d(0px, 0px, 0px)',
-                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                });
-                 e.preventDefault();
-            break;
-          }
+
+        if(this.index[this.upDownIndex] === 1){
+
+              thisPos = 520;
+
+           $('.'+this.allClasses[this.upDownIndex]).css({
+             'transform': "translate3d("+thisPos+"px, 0px,0px)"
+           });
+        }
+        else{
+
+          thisPos += 820;
+
+           $('.'+this.allClasses[this.upDownIndex]).css({
+             'transform': "translate3d("+thisPos+"px, 0px,0px)"
+           });
+        }
+          this.index[this.upDownIndex]-=1;
+
 
         break;
         case "Down":
-          switch(this.row){
-            case '.featuredRow0':
-              this.row = '.gridRow0';
-              this.Y = -520;
-              $(".app-container").css({
-                'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-              });
-            break;
-            case '.gridRow0':
-              this.row = '.gridRow1';
-                this.Y +=-500;
-                $(".app-container").css({
-                  'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                });
-              break;
-              case '.gridRow1':
-                this.row = '.gridRow2';
-                  this.Y +=-460;
-                  $(".app-container").css({
-                    'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                  });
-                break;
-          }
+          if(this.upDownIndex < this.allClasses.length-1){
+           this.upDownIndex+=1;
+           this.row = this.allClasses[this.upDownIndex];
+           posFromLeft = $('.'+this.allClasses[this.upDownIndex]).position();
+          this.posFromLeft[this.upDownIndex] = posFromLeft.left;
+           console.log(this.row);
+          console.log(this.posFromLeft[this.upDownIndex]);
+         }
+         break;
+          // switch(this.allClasses[this.upDownIndex]){
+          //   case '.featuredRow0':
+          //     this.row = '.gridRow0';
+          //     this.Y += -520;
+          //     $(".app-container").css({
+          //       'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+          //       'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+          //     });
+          //   break;
+          //   case '.gridRow0':
+          //     this.row = '.gridRow1';
+          //       this.Y += -220;
+          //       $(".app-container").css({
+          //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+          //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+          //       });
+          //     break;
+          //     case '.gridRow1':
+          //       this.row = '.gridRow2';
+          //         this.Y += -220;
+          //         $(".app-container").css({
+          //           'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+          //           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+          //         });
+          //       break;
+          // }
 
 
-        break;
+        //break;
         case "Up":
-        switch(this.row){
-          case '.gridRow2':
-            this.row = '.gridRow1';
-              this.Y +=460;
-              $(".app-container").css({
-                'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-              });
-            break;
-            case '.gridRow1':
-              this.row = '.gridRow0';
-                this.Y +=500;
-                $(".app-container").css({
-                  'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                  'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                });
-              break;
-              case '.gridRow0':
-                this.row = '.featuredRow0';
-                  this.Y +=520;
-                  $(".app-container").css({
-                    'transform':'translate3d(0px,'+this.Y+'px, 0px)',
-                    'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
-                  });
-                break;
-        }
 
+        if(this.upDownIndex > 0){
+          this.upDownIndex-=1;
+          this.row = this.allClasses[this.upDownIndex];
+           posFromLeft = $('.'+this.allClasses[this.upDownIndex]).position();
+          this.posFromLeft[this.upDownIndex] = posFromLeft.left;
+          console.log(this.row);
+          console.log(this.posFromLeft[this.upDownIndex]);
+        }
         break;
+        // switch(this.row){
+        //   case '.gridRow0':
+        //     this.row = '.featuredRow0';
+        //       this.Y +=520;
+        //       $(".app-container").css({
+        //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+        //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+        //       });
+        //     break;
+        //     case '.gridRow1':
+        //       this.row = '.gridRow0';
+        //         this.Y +=220;
+        //         $(".app-container").css({
+        //           'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+        //           'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+        //         });
+        //       break;
+        //   case '.gridRow2':
+        //     this.row = '.gridRow1';
+        //       this.Y +=220;
+        //       $(".app-container").css({
+        //         'transform':'translate3d(0px,'+this.Y+'px, 0px)',
+        //         'transition': 'all 500ms cubic-bezier(0.86, 0, 0.07, 1)'
+        //       });
+        //     break;
+        //
+        //
+        // }
+
+      //  break;
 
       }
       // if(e.keyIdentifier === "Right"){

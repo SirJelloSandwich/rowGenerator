@@ -2,8 +2,10 @@
 (function(exports){
 
   function Row(config, myindex) {
+    //this.allClasses = [];
       //console.log(config);
     $('.app-container').append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+    //this.allClasses.push(config.type+myindex);
 
     $.each(config.data, function(index, value){
         $('.'+config.type+myindex+'').append('<img src='+config.data[index].image.styles.large+'>');
