@@ -1,11 +1,14 @@
 
 (function(exports){
 
-  function Row(config, myindex) {
+  function Row(config, myindex, container) {
     //this.allClasses = [];
       //console.log(config);
       if(config.rowArrows){
         $('.landingPage').append('<div><span class="rowtitle">Title</span><span class="rowArrowLeft"></span><span class="rowArrowRight"></span></span></div><div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+      }
+      else if(container){
+          $(container).append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
       else{
           $('.landingPage').append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
@@ -22,6 +25,9 @@
       $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="overlay"></div><div class="overlayText">Beyond Today</div></div');
         });
   }
+  // else{
+  //
+  // }
     //</img><span class="duration"></span><span class="description"></span>
     if(config.rowArrows){
     $.each($('.'+config.type+myindex+' div img'),function(){

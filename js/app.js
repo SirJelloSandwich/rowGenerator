@@ -12,15 +12,31 @@ function App(settings) {
   this.allClasses = [];
   this.upDownIndex = 0;
   this.posFromLeft = [-300,100,100,100];
+  this.episodesData = [];
   var thisPos = -300;
   var thisOtherPos = [0,0,0];
   var ttt = 0;
   this.index = [1,0,0,0];
 
   $(this).on( "allDataLoaded", function() {
+    //console.log(this);
     this.dataLoaded();
 
     });
+    $(this).on( "episodesLoaded", function() {
+      console.log("Episodes loaded");
+      //console.log(event);
+      //console.log(this.episodesData);
+       this.episodesData.springboardButtons = 0;
+        var html = this.util.buildTemplate($('#springboard-template'), this.episodesData.data);
+         $('.app-container').append(html);
+           $(".landingPage").hide();
+        // this.springboardRow[0] =  new Row(this.episodesData.data, 0,$('.springboardContainer') );
+        // springboard = this.springboard = new Springboard();
+        this.view = this.springboard;
+    }.bind(this));
+
+
 
   this.makeInitialDataCall = function() {
 
@@ -31,7 +47,7 @@ function App(settings) {
       this.model.loadData(this.row2, "beyondTodayTV",  this.gridRowCallbackHandler);
       this.row3 = 'http://www.ucg.org/api/v1.0/series?filter[production]=275';
       this.model.loadData(this.row3, "seriesData", this.gridRowCallbackHandler);
-
+      //console.log(this);
       $( this).trigger( "allDataLoaded" );
   };
 
@@ -42,6 +58,15 @@ function App(settings) {
 
     this.genericCallbackHandler = function(data){
       this.allGridRows.push(data);
+    }.bind(this);
+
+    this.episodesCallbackHandler = function(data){
+      //console.log( data);
+      //var thisData = data;
+      this.episodesData = data;
+
+      $(this).trigger("episodesLoaded");
+
     }.bind(this);
 
     this.gridRowCallbackHandler = function(data){
@@ -117,8 +142,9 @@ function App(settings) {
 };
 
   this.keyDown = function(e){
-      //console.log(e);
+      var html;
       var posFromLeft;
+      var springboard;
 
 
       switch(e.keyIdentifier){
@@ -137,19 +163,26 @@ function App(settings) {
             }
           }.bind(this))();
 
-          fff.fliYear = new Date().getFullYear(fff.created);
-          fff.fliTime = fff.duration.toHHMMSS();
-          // fff.fliAuthors = fff.authors.forEach(function(element, index, array){
-          //   console.log(element);
-          //     //return element.label;
-          // });
-          //console.log(  fff.fliAuthors );
-          fff.springboardButtons = 1;
-          var html = this.util.buildTemplate($('#springboard-template'), fff);
-          $('.app-container').append(html);
-          $(".landingPage").hide();
+          if(this.upDownIndex < 3){
+            fff.fliYear = new Date().getFullYear(fff.created);
+            fff.fliTime = fff.duration.toHHMMSS();
+            fff.springboardButtons = 1;
+            html = this.util.buildTemplate($('#springboard-template'), fff);
+            $('.app-container').append(html);
+            $(".landingPage").hide();
+            springboard = this.springboard = new Springboard();
+            this.view = this.springboard;
+          }
+          else{
 
-          //console.log(fff);
+            this.model.loadData(fff.self,"episodesData",  this.episodesCallbackHandler);
+
+
+          }
+
+
+
+
 
 
         break;
