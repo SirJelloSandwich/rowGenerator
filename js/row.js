@@ -5,21 +5,26 @@
     //this.allClasses = [];
       //console.log(config);
       if(config.rowArrows){
-        $('.landingPage').append('<div><span class="rowtitle">Title</span><span class="rowArrowLeft"></span><span class="rowArrowRight"></span></span></div><div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+        $('.landingPage').append('<div class='+config.parentClass+'><span class="rowtitle">Title</span><span class="rowArrowLeft"></span><span class="rowArrowRight"></span></span></div><div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
       else if(container){
-          $(container).append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+          $(container).append('<div class='+config.parentClass+'><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
       else{
-          $('.landingPage').append('<div><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
+          $('.landingPage').append('<div class='+config.parentClass+'><div class='+config.type+myindex+' index="'+myindex+'"></div></div>');
       }
 
     //this.allClasses.push(config.type+myindex);
-      if(config.rowArrows){
+      if(config.rowArrows || config.type === 'seriesSpringboardRow'){
         $.each(config.data, function(index, value){
             $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="label">'+config.data[index].label+'</div><div class="duration">'+config.data[index].duration+'</div><div class="description">'+config.data[index].description+'</div></div>');
         });
   }
+  // else if(config.type === 'seriesSpringboardRow'){
+  //   $.each(config.data, function(index, value){
+  //     $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="overlay"></div><div class="overlayText">Beyond Today</div></div');
+  //       });
+  // }
   else{
     $.each(config.data, function(index, value){
       $('.'+config.type+myindex+'').append('<div><img id='+config.data[index].id+' src='+config.data[index].image.styles.large+'><div class="overlay"></div><div class="overlayText">Beyond Today</div></div');

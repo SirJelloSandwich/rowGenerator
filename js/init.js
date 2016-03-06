@@ -10,7 +10,8 @@ var settings = {
      marginRight:20,
      marginBottom: 20,
      marginLeft:0,
-      position: -300
+    position: -300,
+    parentClass: 'featuredRowParent'
     //  data:clientData.data
 
   },
@@ -23,7 +24,8 @@ var settings = {
      marginBottom: 20,
      marginLeft:0,
      rowArrows: 1,
-     position: 0
+     position: 0,
+      parentClass: 'gridRowParent'
     //  data:clientData.data
 
   }
@@ -31,14 +33,3 @@ var settings = {
 
   exports.app = new App(settings);
 }(window));
-
-// (function(exports) {
-//   'use strict';
-//  function XXX(xxx){
-//
-//   }
-//
-//
-//   exports.xxx = new XXX(xxxxxxxx);
-//   exports.xxx = XXX;
-// }(window));

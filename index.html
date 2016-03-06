@@ -18,7 +18,7 @@
 
         <div class="springboardContainer">
 
-            <div id="springboardPage">
+            <div class="springboardPage">
               <div class="mainSpringboardPic">
                 {{#if image}}
                   <img class="thumbPic" src={{image.styles.medium}}>
@@ -29,10 +29,11 @@
               <div class="springboardData">
                 <span class="springboardMainTitle">{{label}}</span>
                 <div class="ratingEtc">
-
+                  {{#if fliYear}}
                   <span class="movieYear">
                     {{fliYear}} |
                   </span>
+                  {{/if}}
 
                   {{#each authors}}
 
@@ -43,11 +44,15 @@
                   </span>
                   {{/each}}
 
-
+                    {{#if fliTime}}
                   <span class="movieLength">
                      {{fliTime}}
                   </span>
+                  {{/if}}
 
+                </div>
+                <div class="sbDescription">
+                  {{description}}
                 </div>
                 {{#if springboardButtons}}
                 <div class="springboardRow">
@@ -70,6 +75,7 @@
       <script src="libs/handlebars-v4.0.5.js"></script>
       <script src="libs/jquery-2.2.1.min.js"></script>
       <script src="js/util.js"></script>
+      <script src="js/seriesSpringboard.js"></script>
       <script src="js/springboard.js"></script>
       <script src="js/model.js"></script>
       <script src="js/row.js"></script>

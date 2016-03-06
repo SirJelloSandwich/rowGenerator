@@ -13,6 +13,7 @@ function App(settings) {
   this.upDownIndex = 0;
   this.posFromLeft = [-300,100,100,100];
   this.episodesData = [];
+  this.springboardRow = [];
   var thisPos = -300;
   var thisOtherPos = [0,0,0];
   var ttt = 0;
@@ -26,14 +27,30 @@ function App(settings) {
     $(this).on( "episodesLoaded", function() {
       console.log("Episodes loaded");
       //console.log(event);
-      //console.log(this.episodesData);
-       this.episodesData.springboardButtons = 0;
-        var html = this.util.buildTemplate($('#springboard-template'), this.episodesData.data);
-         $('.app-container').append(html);
-           $(".landingPage").hide();
-        // this.springboardRow[0] =  new Row(this.episodesData.data, 0,$('.springboardContainer') );
-        // springboard = this.springboard = new Springboard();
-        this.view = this.springboard;
+      console.log(this.episodesData);
+      this.episodesData.springboardButtons = 0;
+      var html = this.util.buildTemplate($('#springboard-template'), this.episodesData.data[0]);
+      $('.app-container').append(html);
+      $(".landingPage").hide();
+      var seriesSpringboardRowData = {
+        type:'seriesSpringboardRow',
+         width : 400,
+         height:200,
+         marginTop:0,
+         marginRight:20,
+         marginBottom: 20,
+         marginLeft:0,
+         rowArrows: 0,
+         position: 0,
+         parentClass: 'seriesSpringboardParent',
+          data:this.episodesData.data[0].episodes
+
+      };
+      this.springboardRow[0] =  new Row(seriesSpringboardRowData, 0,$('.springboardPage') );
+      var seriesSpringboard = this.seriesSpringboard = new SeriesSpringboard();
+      this.view = this.seriesSpringboard;
+      $('.springboardPage hr').css('opacity', '1');
+
     }.bind(this));
 
 
@@ -176,6 +193,7 @@ function App(settings) {
           else{
 
             this.model.loadData(fff.self,"episodesData",  this.episodesCallbackHandler);
+
 
 
           }

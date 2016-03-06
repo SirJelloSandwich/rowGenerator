@@ -27,8 +27,10 @@ body{
     left: 300px;
     z-index: 1000;*/
 }
-.description{
-
+.sbDescription{
+  position: relative;
+  font-size: 24px;
+  top:20px;
 }
 .overlay{
   background: #000000;
@@ -48,15 +50,38 @@ body{
 }
 .gridRow1> div, .gridRow2 > div , .gridRow3 > div  {
   position: relative;
-height: 300px;
-width: 420px;
-float: left;
+  height: 300px;
+  width: 420px;
+  float: left;
 }
+.seriesSpringboardRow0 > div{
+  position: relative;
+  height: 350px;
+  width: 420px;
+  float: left;
+}
+.seriesSpringboardParent{
+  color: #a5a5a5;
+  font-size: 24px;
+  position: relative;
+  top: 450px;
+  width: 1660px;
+  overflow: hidden;
+  transform: translate3d(120px,0px,0px);
+}
+/*.seriesSpringboardRow0 > div:nth-child(odd):not(:first-child){
+
+    width: 1660px;
+    overflow: hidden;
+    transform: translate3d(100px,0px,0px);
+
+}*/
+
 .featuredRow0 > div{
   position: relative;
-      height: 500px;
-      width: 820px;
-      float: left;
+    height: 500px;
+    width: 820px;
+    float: left;
 }
 
 
@@ -97,23 +122,23 @@ left: 1680px;
   overflow: hidden;
   transform: translate3d(100px,0px,0px);
 }*/
-.landingPage > div:nth-child(even){
+/*.landingPage > div:nth-child(even){
   /*width: 1660px;
   overflow: hidden;
   transform: translate3d(100px,0px,0px);*/
-}
+}*/
 
 
-.landingPage > div:first-child > img {
+/*.landingPage > div:first-child > img {
 
 
-}
+}*/
 .gridRow {
     width: 0px;
     overflow: hidden;
 }
 
-.gridRow > img {
+/*.gridRow > img {
 
 
-}
+}*/
