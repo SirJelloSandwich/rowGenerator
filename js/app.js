@@ -221,6 +221,9 @@ function App(settings) {
                    }
                 break;
                 default:
+
+                  //$('.'+this.row).append($('.'+this.row).children().first());
+
                   if(this.index[this.upDownIndex] < $('.'+this.row).children().length-1){
                     thisOtherPos[this.upDownIndex-1] += -420;
 

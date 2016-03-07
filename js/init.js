@@ -25,7 +25,7 @@ var settings = {
      marginLeft:0,
      rowArrows: 1,
      position: 0,
-      parentClass: 'gridRowParent'
+      parentClass: 'gridRowUpperSibling'
     //  data:clientData.data
 
   }

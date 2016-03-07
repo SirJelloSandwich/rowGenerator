@@ -5,6 +5,12 @@ body{
   overflow: hidden;
   background: url('../assets/bg_fhd.jpg');
   margin: 0px;
+  font-family : 'Roboto', serif;
+}
+.featuredRowParent{
+  position: relative;
+  height: 550px;
+  top: 30px;
 }
 .overhang{
   content: url('../assets/overhang_fhd.jpg');
@@ -13,24 +19,46 @@ body{
   z-index: 1;
 }
 .rowTitle{
-  font-size: 36px;
+
   position: relative;
   left: 100px;
   bottom: 10px;
+  color: #333333;
+  font-size: 32px;
+  font-weight: bold;
 }
 .duration{
-  /*background: red;
-    width: 100px;
-    height: 50px;
-    position: absolute;
-    top: 150px;
-    left: 300px;
-    z-index: 1000;*/
+  opacity: 1;
+color: white;
+position: relative;
+top: -65px;
+left: 295px;
+background: rgba(0, 0, 0, 0.4);
+width: 100px;
+text-align: center;
+z-index: 1000;
+font-size: 26px;
+height: 42px;
+line-height: 42px;
+}
+.label{
+  position: relative;
+    font-size: 26px;
+    line-height: 30px;
+    color: #333333;
+    width: 398px;
+    top: -30px;
 }
 .sbDescription{
   position: relative;
-  font-size: 24px;
+
   top:20px;
+
+  font-size: 26px;
+  line-height: 30px;
+  color: #333333;
+  width: 398px;
+  top: -30px;
 }
 .overlay{
   background: #000000;
