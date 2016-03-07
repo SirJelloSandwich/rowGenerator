@@ -12,9 +12,18 @@
 
           break;
           case "U+0008"://BACK
+          if($('.springboardContainer').length > 1){
+            $('.springboardContainer').eq(1).remove();
+            $('.springboardContainer').eq(0).show();
+            app.view = app.seriesSpringboard;
+            // e.preventDefault();
+          }
+          else{
             $('.springboardContainer').remove();
             $(".landingPage").show();
             app.view = app;
+
+          }
 
           break;
         }

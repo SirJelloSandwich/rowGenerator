@@ -25,9 +25,9 @@ function App(settings) {
 
     });
     $(this).on( "episodesLoaded", function() {
-      console.log("Episodes loaded");
+      //console.log("Episodes loaded");
       //console.log(event);
-      console.log(this.episodesData);
+      //console.log(this.episodesData);
       this.episodesData.springboardButtons = 0;
       var html = this.util.buildTemplate($('#springboard-template'), this.episodesData.data[0]);
       $('.app-container').append(html);
@@ -47,7 +47,7 @@ function App(settings) {
 
       };
       this.springboardRow[0] =  new Row(seriesSpringboardRowData, 0,$('.springboardPage') );
-      var seriesSpringboard = this.seriesSpringboard = new SeriesSpringboard();
+      var seriesSpringboard = this.seriesSpringboard = new SeriesSpringboard(this.episodesData.data[0].episodes);
       this.view = this.seriesSpringboard;
       $('.springboardPage hr').css('opacity', '1');
 
@@ -170,7 +170,7 @@ function App(settings) {
           var id = $('.'+this.allClasses[this.upDownIndex]+" "+"img").eq(this.index[this.upDownIndex]).attr('id');
           //console.log(id);
 
-          var fff = (function(){
+          var selectedItem = (function(){
             for(var ttt in this.allGridRows){
               for(var ppp in this.allGridRows[ttt].data){
                 if(parseInt(this.allGridRows[ttt].data[ppp].id, 10 ) === parseInt(id, 10)){//? this.allGridRows[ttt].data[ppp]: false ;
@@ -181,10 +181,10 @@ function App(settings) {
           }.bind(this))();
 
           if(this.upDownIndex < 3){
-            fff.fliYear = new Date().getFullYear(fff.created);
-            fff.fliTime = fff.duration.toHHMMSS();
-            fff.springboardButtons = 1;
-            html = this.util.buildTemplate($('#springboard-template'), fff);
+            selectedItem.fliYear = new Date().getFullYear(selectedItem.created);
+            selectedItem.fliTime = selectedItem.duration.toHHMMSS();
+            selectedItem.springboardButtons = 1;
+            html = this.util.buildTemplate($('#springboard-template'), selectedItem);
             $('.app-container').append(html);
             $(".landingPage").hide();
             springboard = this.springboard = new Springboard();
@@ -192,7 +192,7 @@ function App(settings) {
           }
           else{
 
-            this.model.loadData(fff.self,"episodesData",  this.episodesCallbackHandler);
+            this.model.loadData(selectedItem.self,"episodesData",  this.episodesCallbackHandler);
 
 
 

@@ -51,14 +51,11 @@ line-height: 42px;
 }
 .sbDescription{
   position: relative;
-
   top:20px;
-
   font-size: 26px;
   line-height: 30px;
   color: #333333;
-  width: 398px;
-  top: -30px;
+
 }
 .overlay{
   background: #000000;
