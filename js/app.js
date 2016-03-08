@@ -24,12 +24,12 @@ function App(settings) {
     this.dataLoaded();
 
     });
-    $(this).on( "episodesLoaded", function() {
+    $(this).on( "episodesLoaded", function(event, data) {
       //console.log("Episodes loaded");
       //console.log(event);
       //console.log(this.episodesData);
       this.episodesData.springboardButtons = 0;
-      var html = this.util.buildTemplate($('#springboard-template'), this.episodesData.data[0]);
+      var html = this.util.buildTemplate($('#springboard-template'), data.data[0]);
       $('.app-container').append(html);
       $(".landingPage").hide();
       var seriesSpringboardRowData = {
@@ -43,11 +43,11 @@ function App(settings) {
          rowArrows: 0,
          position: 0,
          parentClass: 'seriesSpringboardParent',
-          data:this.episodesData.data[0].episodes
+          data:data.data[0].episodes
 
       };
       this.springboardRow[0] =  new Row(seriesSpringboardRowData, 0,$('.springboardPage') );
-      var seriesSpringboard = this.seriesSpringboard = new SeriesSpringboard(this.episodesData.data[0].episodes);
+      var seriesSpringboard = this.seriesSpringboard = new SeriesSpringboard(data.data[0].episodes);
       this.view = this.seriesSpringboard;
       $('.springboardPage hr').css('opacity', '1');
 
@@ -69,7 +69,7 @@ function App(settings) {
   };
 
     this.featuredCallbackHandler  = function(urlString){
-          this.model.loadData(urlString, "featuredRowData", this.genericCallbackHandler);
+        this.model.loadData(urlString, "featuredRowData", this.genericCallbackHandler);
 
     }.bind(this);
 
@@ -78,17 +78,15 @@ function App(settings) {
     }.bind(this);
 
     this.episodesCallbackHandler = function(data){
-      //console.log( data);
-      //var thisData = data;
-      this.episodesData = data;
 
-      $(this).trigger("episodesLoaded");
+      $(this).trigger("episodesLoaded",data);
 
     }.bind(this);
 
     this.gridRowCallbackHandler = function(data){
+
       this.allGridRows.push(data);
-    //console.log(  app.allGridRows);
+
     }.bind(this);
 
     this.dataLoaded = function() {
@@ -152,7 +150,7 @@ function App(settings) {
     var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
     if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
+    if (minutes < 10) {minutes = minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
     var time    = minutes+':'+seconds;
     return time;
@@ -287,7 +285,21 @@ function App(settings) {
 
         break;
         case "Down":
+
+
           if(this.upDownIndex < this.allClasses.length-1){
+            if(this.row === 'featuredRow0'){
+              this.Y += -530;
+              $('.landingPage').css({
+                'transform': 'translateY('+this.Y+'px)'
+              });
+            }
+            else{
+              this.Y += -350;
+              $('.landingPage').css({
+                'transform': 'translateY('+this.Y+'px)'
+              });
+            }
            this.upDownIndex+=1;
            this.row = this.allClasses[this.upDownIndex];
            posFromLeft = $('.'+this.allClasses[this.upDownIndex]).position();
@@ -300,6 +312,19 @@ function App(settings) {
         case "Up":
 
         if(this.upDownIndex > 0){
+
+          if(this.row === 'gridRow1'){
+            this.Y += 530;
+            $('.landingPage').css({
+              'transform': 'translateY('+this.Y+'px)'
+            });
+          }
+          else{
+            this.Y += 350;
+            $('.landingPage').css({
+              'transform': 'translateY('+this.Y+'px)'
+            });
+          }
           this.upDownIndex-=1;
           this.row = this.allClasses[this.upDownIndex];
            posFromLeft = $('.'+this.allClasses[this.upDownIndex]).position();

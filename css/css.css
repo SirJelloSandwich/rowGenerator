@@ -21,7 +21,7 @@ body{
 .rowTitle{
 
   position: relative;
-  left: 100px;
+  left: 120px;
   bottom: 10px;
   color: #333333;
   font-size: 32px;
@@ -42,12 +42,12 @@ height: 42px;
 line-height: 42px;
 }
 .label{
-  position: relative;
+  position: absolute;
     font-size: 26px;
     line-height: 30px;
     color: #333333;
     width: 398px;
-    top: -30px;
+    top: 240px;
 }
 .sbDescription{
   position: relative;
@@ -62,7 +62,7 @@ line-height: 42px;
   height: 75px;
   position: relative;
   top: -95px;
-  width: 800px;
+  width: 825px;
   opacity: 0.7;
 }
 .overlayText{
@@ -76,7 +76,7 @@ line-height: 42px;
 .gridRow1> div, .gridRow2 > div , .gridRow3 > div  {
   position: relative;
   height: 300px;
-  width: 420px;
+
   float: left;
 }
 .seriesSpringboardRow0 > div{
@@ -104,9 +104,8 @@ line-height: 42px;
 
 .featuredRow0 > div{
   position: relative;
-    height: 500px;
-    width: 820px;
-    float: left;
+  height: 500px;
+  float: left;
 }
 
 
@@ -114,7 +113,7 @@ line-height: 42px;
   position: relative;
   top: 120px;
   width: 40px;
-  left: -30px;
+  left: -10px;
   height: 40px;
   content: url('../assets/icon_40_arrowleft_fhd.png');
 }
@@ -125,7 +124,7 @@ top: 120px;
 width: 40px;
 height: 40px;
 content: url('../assets/icon_40_arrowright_fhd.png');
-left: 1680px;
+left: 1700px;
 }
 
 
@@ -139,7 +138,7 @@ left: 1680px;
 
     width: 1660px;
     overflow: hidden;
-    transform: translate3d(100px,0px,0px);
+    transform: translate3d(125px,0px,0px);
 
 }
 /*.gridRow0, .gridRow1, .gridRow2{

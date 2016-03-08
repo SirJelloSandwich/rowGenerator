@@ -4,8 +4,8 @@
 var settings = {
    featuredRowData : {
      type:'featuredRow',
-     width : 800,
-     height:500,
+     width : 825,
+     height:464,
      marginTop:0,
      marginRight:20,
      marginBottom: 20,
@@ -17,8 +17,8 @@ var settings = {
   },
   gridRowData : {
     type:'gridRow',
-     width : 400,
-     height:200,
+     width : 398,
+     height:224,
      marginTop:0,
      marginRight:20,
      marginBottom: 20,
